@@ -1,31 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-
-function HomePage () {
-  return (
-    <>
-      <h1>Home</h1>
-      <p>Home page for example to create a mini React Router</p>
-      <a href='/about'>About</a>
-    </>
-  )
-}
-function AboutPage () {
-  return (
-    <>
-      <h1>About</h1>
-      <div>
-        <p>Hello! I'm José Vega and I'm creating a clone of React Router</p>
-        <img src='https://media.licdn.com/dms/image/C4E03AQFJnnpu4hNqYQ/profile-displayphoto-shrink_800_800/0/1642480100351?e=1687392000&v=beta&t=cKv6eQQBw0qjLhRWgrZQ95nZ-DvkJOBzvjr8w-xLBHk' alt='Photo of José Vega' />
-      </div>
-      <a href='/'>Home</a>
-
-    </>
-  )
-}
+import { EVENTS } from './utils/constants'
+import { HomePage } from './pages/Home'
+import { AboutPage } from './pages/About'
 
 function App () {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
+
+  useEffect(() => {
+    const onPathChanged = () => {
+      setCurrentPath(window.location.pathname)
+    }
+    window.addEventListener(EVENTS.PUSH_STATE, onPathChanged)
+    window.addEventListener(EVENTS.POP_STATE, onPathChanged)
+
+    return () => {
+      window.removeEventListener(EVENTS.PUSH_STATE, onPathChanged)
+      window.removeEventListener(EVENTS.POP_STATE, onPathChanged)
+    }
+  }, [])
+
   return (
     <div className='App'>
       {currentPath === '/' && <HomePage />}
