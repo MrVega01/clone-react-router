@@ -15,6 +15,7 @@ export function Link ({ children, target, to, ...props }) {
     if (isPrimaryClick && isPureClick && isTargetManageable) {
       e.preventDefault()
       navigate(to)
+      window.scrollTo(0, 0)
     }
   }
   return <a href={to} target={target} {...props} onClick={handlerClickLink}>{children}</a>
