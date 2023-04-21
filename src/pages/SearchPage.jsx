@@ -1,4 +1,4 @@
-export function Search ({ routeParams }) {
+export function SearchPage ({ routeParams }) {
   return (
     <>
       <h1>You have searched:</h1>
